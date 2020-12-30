@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jxcmobiledevteam.micka">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".FindDriverActivity"></activity>
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".UserRideActivity" />
+        <activity android:name=".DriverSettingActivity" />
+        <activity android:name=".MainDriverActivity" />
+        <activity
+            android:name=".CheckoutPaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CheckUserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CheckPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HelpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PromosActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PaymentHistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RideHistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PaymentActivity"
+            android:screenOrientation="portrait" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".SecondPageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FirstPageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ConfirmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>

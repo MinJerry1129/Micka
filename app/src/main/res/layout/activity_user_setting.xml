@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserSettingActivity"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Setting"
+        android:textSize="25dp"
+        android:layout_marginTop="40dp"
+        android:textAlignment="center"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_help"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/back_pink_button"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="Help"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_mode"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/back_pink_button"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="Driver Mode"/>
+
+</LinearLayout>

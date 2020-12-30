@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "612165048291",
+    "firebase_url": "https://micka-bfa25-default-rtdb.firebaseio.com",
+    "project_id": "micka-bfa25",
+    "storage_bucket": "micka-bfa25.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612165048291:android:9adb2df1c0eaff73d0b2d6",
+        "android_client_info": {
+          "package_name": "com.jxcmobiledevteam.micka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612165048291-uukpduuuhf0o5b55hhkr1ii2ousgm3dq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jxcmobiledevteam.micka",
+            "certificate_hash": "da459f64877205390658348505f724fa13e42f2b"
+          }
+        },
+        {
+          "client_id": "612165048291-j6430i744vt9betuufh34haoulel8gm0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIYUbNzis2fCzYYhM6Ht4DtHUqv8w9aIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612165048291-j6430i744vt9betuufh34haoulel8gm0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

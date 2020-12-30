@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PhoneActivity"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="40dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/string_verification"
+            android:textSize="30dp"
+            android:textColor="@color/colorBlack"
+            android:paddingBottom="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/string_entercode"
+            android:textColor="@color/colorBlack"
+            android:textSize="15dp"
+            android:paddingBottom="10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back_gray_layout"
+            android:gravity="center">
+            <EditText
+                android:id="@+id/confirm_code"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textAlignment="center"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_wrongcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wrong verify code."
+            android:textColor="@color/colorRed"
+            android:paddingBottom="5dp"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/string_sms"
+                android:textSize="15dp"/>
+            <TextView
+                android:id="@+id/phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:text="+12345678"/>
+        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_confrim"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/back_pink_button"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="Confirm"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="20dp">
+        <TextView
+            android:id="@+id/send_again"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/string_notcode"
+            android:textColor="@color/colorPink"
+            android:textSize="20dp"/>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

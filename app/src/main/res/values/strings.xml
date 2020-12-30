@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Micka</string>
+    <string name="login_phone">Continue with phone number</string>
+    <string name="login_facebook">Continue with Facebook</string>
+
+    <string name="login_terminal">By tapping on continue, I accept the use of my personal information for the purpose of optimizing the app experience for me. View the terms of service and our privacy policy</string>
+    <string name="permission_deny">Micka needs to access to your position as well as your phone to make calls when you ask it to. Allow Phone and Location permissions in your phone settings in order to use Micka</string>
+    <string name="string_hey">Hey you!</string>
+    <string name="string_phone_number">What is your phone number</string>
+    <string name="string_ride">Used for sign in and to contact you about a ride.</string>
+    <string name="string_confirm">Confirm</string>
+    <string name="string_verification">Phone verification</string>
+    <string name="string_entercode">Enter the code we sent you</string>
+    <string name="string_sms">A SMS should arrive shortly at</string>
+    <string name="string_notcode">I have not received the code</string>
+    <string name="string_open">Open</string>
+    <string name="string_close">Close</string>
+
+
+</resources>

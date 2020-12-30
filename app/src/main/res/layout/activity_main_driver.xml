@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".FirstPageActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/map_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_join"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:background="@drawable/back_pink_button"
+                        android:text="Offline"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <LinearLayout
+                    android:id="@+id/layout_confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/back_edittext_location">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:gravity="center">
+                        <TextView
+                            android:id="@+id/txt_price"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/colorPink"
+                            android:textSize="25dp"
+                            android:textStyle="bold"
+                            android:text="14€"
+                            android:textAlignment="center"/>
+
+                        <ImageView
+                            android:id="@+id/btn_call"
+                            android:layout_width="25dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_call" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_start"/>
+                        <TextView
+                            android:id="@+id/start_address"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="adsfadsfasdf"
+                            android:textColor="@color/colorBlack"
+                            android:maxLines="3"/>
+                        <ImageView
+                            android:id="@+id/btn_waze"
+                            android:layout_width="25dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_waze" />
+                    </LinearLayout>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_booking"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/colorWhite"
+                        android:background="@drawable/back_pink_button"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="Accept"/>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_cancel"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/colorBlack"
+                        android:background="@drawable/back_gray_button"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="Cancel"/>
+
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ffffff"
+        app:itemTextColor="@color/colorNav"
+        app:itemIconTint="@color/colorNav"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/navigation_driver"/>
+</LinearLayout>

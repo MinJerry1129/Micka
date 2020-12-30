@@ -1,0 +1,15 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
+    </style>
+    <style name="AppTheme.Bright.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">@color/colorWhite</item>
+        <item name="android:textColorPrimary">@color/colorBlack</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+</resources>
