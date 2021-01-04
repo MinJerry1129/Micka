@@ -83,6 +83,7 @@ public class CheckPasswordActivity extends AppCompatActivity {
 
                     Log.d("password:", value);
                 }else{
+                    mDatabase.getReference("user/"+mAuth.getUid()+"/id").setValue(mAuth.getUid());
                     mDatabase.getReference("user/"+mAuth.getUid()+"/enable").setValue("no");
                     mDatabase.getReference("user/"+mAuth.getUid()+"/phonenumber").setValue(Common.getInstance().getPhonenumber());
                     mDatabase.getReference("user/"+mAuth.getUid()+"/phonetoken").setValue(FirebaseInstanceId.getInstance().getToken());

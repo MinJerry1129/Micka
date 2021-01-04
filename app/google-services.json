@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "612165048291",
-    "firebase_url": "https://micka-bfa25-default-rtdb.firebaseio.com",
-    "project_id": "micka-bfa25",
-    "storage_bucket": "micka-bfa25.appspot.com"
+    "project_number": "62509849666",
+    "firebase_url": "https://micka-7a176-default-rtdb.firebaseio.com",
+    "project_id": "micka-7a176",
+    "storage_bucket": "micka-7a176.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:612165048291:android:9adb2df1c0eaff73d0b2d6",
+        "mobilesdk_app_id": "1:62509849666:android:9cc5c828d7c0901d7ae1db",
         "android_client_info": {
           "package_name": "com.jxcmobiledevteam.micka"
         }
       },
       "oauth_client": [
         {
-          "client_id": "612165048291-uukpduuuhf0o5b55hhkr1ii2ousgm3dq.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.jxcmobiledevteam.micka",
-            "certificate_hash": "da459f64877205390658348505f724fa13e42f2b"
-          }
-        },
-        {
-          "client_id": "612165048291-j6430i744vt9betuufh34haoulel8gm0.apps.googleusercontent.com",
+          "client_id": "62509849666-0rlmj8gu06fujoetbvqfi2aemgaclb36.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBIYUbNzis2fCzYYhM6Ht4DtHUqv8w9aIE"
+          "current_key": "AIzaSyB8RD2Pu5w7bv-UrhWA5dN1Brzdo-yf1SI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "612165048291-j6430i744vt9betuufh34haoulel8gm0.apps.googleusercontent.com",
+              "client_id": "62509849666-0rlmj8gu06fujoetbvqfi2aemgaclb36.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
