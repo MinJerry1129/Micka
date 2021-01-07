@@ -25,6 +25,7 @@ public class UserSettingActivity extends AppCompatActivity {
 
     Button _btn_help;
     Button _btn_mode;
+    Button _btn_logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class UserSettingActivity extends AppCompatActivity {
 
         _btn_help = (Button)findViewById(R.id.btn_help);
         _btn_mode = (Button)findViewById(R.id.btn_mode);
+        _btn_logout = (Button)findViewById(R.id.btn_logout);
         _btn_help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,10 +49,22 @@ public class UserSettingActivity extends AppCompatActivity {
                 openMode();
             }
         });
+        _btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logOut();
+            }
+        });
     }
     public void openHelp(){
         Intent intent = new Intent(UserSettingActivity.this, HelpActivity.class);
         startActivity(intent);
+    }
+    public void logOut(){
+        mAuth.signOut();
+        Intent intent = new Intent(UserSettingActivity.this, CheckUserActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void openMode(){

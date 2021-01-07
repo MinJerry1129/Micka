@@ -50,6 +50,9 @@ public class CheckUserActivity extends AppCompatActivity implements LocationList
         locationmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10, this);
         checkUser();
     }
+    @Override
+    public void onBackPressed() {
+    }
     private void checkUser(){
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null) {

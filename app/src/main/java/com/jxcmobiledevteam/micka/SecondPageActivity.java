@@ -68,30 +68,31 @@ public class SecondPageActivity extends AppCompatActivity implements OnMapReadyC
 
         locationmanager = (LocationManager) getSystemService(LOCATION_SERVICE);
         String provider = locationmanager.getBestProvider(new Criteria(), true);
+        my_location = new LatLng(48.85299,2.34288);
+        Location LocationGps;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
+        }else{
+            LocationGps = locationmanager.getLastKnownLocation(provider);
         }
-        Location LocationGps = locationmanager.getLastKnownLocation(provider);
         if (LocationGps != null) {
             my_location = new LatLng(LocationGps.getLatitude(), LocationGps.getLongitude());
             Common.getInstance().setEnd_location(my_location);
-            try {
-                addresses = geocoder.getFromLocation(my_location.latitude, my_location.longitude, 1);
-                String city = addresses.get(0).getLocality();
-                String state = addresses.get(0).getAdminArea();
-                String country = addresses.get(0).getCountryName();
-                String postalCode = addresses.get(0).getPostalCode();
-                String knownName = addresses.get(0).getFeatureName();
-                String throughFare = addresses.get(0).getThoroughfare();
-                Log.d("location", String.valueOf(addresses));
-                _end_location.setText(knownName + " " +throughFare+ ", " +postalCode + " " +city);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
         }else{
+            my_location = new LatLng(48.8499,2.3512);
         }
+        try {
+            addresses = geocoder.getFromLocation(my_location.latitude, my_location.longitude, 1);
+            String city = addresses.get(0).getLocality();
+            String postalCode = addresses.get(0).getPostalCode();
+            String knownName = addresses.get(0).getFeatureName();
+            String throughFare = addresses.get(0).getThoroughfare();
+            Log.d("location", String.valueOf(addresses));
+            _end_location.setText(knownName + " " +throughFare+ ", " +postalCode + " " +city);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -131,6 +132,7 @@ public class SecondPageActivity extends AppCompatActivity implements OnMapReadyC
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         GMap = googleMap;
+        googleMap.clear();
         googleMap.addMarker(new MarkerOptions().position(my_location));
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(my_location,14));
 

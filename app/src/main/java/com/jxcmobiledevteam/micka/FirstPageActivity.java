@@ -102,28 +102,32 @@ public class FirstPageActivity extends AppCompatActivity implements OnMapReadyCa
 
         locationmanager = (LocationManager) getSystemService(LOCATION_SERVICE);
         my_location = new LatLng(48.85299,2.34288);
+        Location LocationGps;
         String provider = locationmanager.getBestProvider(new Criteria(), true);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
+        }else{
+            LocationGps = locationmanager.getLastKnownLocation(provider);
         }
-        Location LocationGps = locationmanager.getLastKnownLocation(provider);
         if (LocationGps != null) {
             my_location = new LatLng(LocationGps.getLatitude(), LocationGps.getLongitude());
             Common.getInstance().setStart_location(my_location);
-            try {
-                addresses = geocoder.getFromLocation(my_location.latitude, my_location.longitude, 1);
-                String city = addresses.get(0).getLocality();
-                String state = addresses.get(0).getAdminArea();
-                String country = addresses.get(0).getCountryName();
-                String postalCode = addresses.get(0).getPostalCode();
-                String knownName = addresses.get(0).getFeatureName();
-                String throughFare = addresses.get(0).getThoroughfare();
-                Log.d("location", String.valueOf(addresses));
-                _start_location.setText(knownName + " " +throughFare+ ", " +postalCode + " " +city);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
         }else{
+            my_location = new LatLng(48.85299,2.34288);
+        }
+        try {
+            addresses = geocoder.getFromLocation(my_location.latitude, my_location.longitude, 1);
+            String city = addresses.get(0).getLocality();
+            String state = addresses.get(0).getAdminArea();
+            String country = addresses.get(0).getCountryName();
+            String postalCode = addresses.get(0).getPostalCode();
+            String knownName = addresses.get(0).getFeatureName();
+            String throughFare = addresses.get(0).getThoroughfare();
+            Log.d("location", String.valueOf(addresses));
+            _start_location.setText(knownName + " " +throughFare+ ", " +postalCode + " " +city);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         setupView();
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);

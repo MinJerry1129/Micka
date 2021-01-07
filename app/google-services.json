@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "62509849666-kt2e5vkc5qgm7jq0k7mq1siaplh7bgl1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jxcmobiledevteam.micka",
+            "certificate_hash": "da459f64877205390658348505f724fa13e42f2b"
+          }
+        },
+        {
           "client_id": "62509849666-0rlmj8gu06fujoetbvqfi2aemgaclb36.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -30,6 +38,13 @@
             {
               "client_id": "62509849666-0rlmj8gu06fujoetbvqfi2aemgaclb36.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "62509849666-3nr1ekiv0nl2qlnn1f5scjlgf64depkq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jxcmobiledevteam.Micka"
+              }
             }
           ]
         }
