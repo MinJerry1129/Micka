@@ -106,9 +106,9 @@ public class FirstPageActivity extends AppCompatActivity implements OnMapReadyCa
         String provider = locationmanager.getBestProvider(new Criteria(), true);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
-        }else{
-            LocationGps = locationmanager.getLastKnownLocation(provider);
         }
+//        locationmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 30, (LocationListener) this);
+        LocationGps = locationmanager.getLastKnownLocation(provider);
         if (LocationGps != null) {
             my_location = new LatLng(LocationGps.getLatitude(), LocationGps.getLongitude());
             Common.getInstance().setStart_location(my_location);

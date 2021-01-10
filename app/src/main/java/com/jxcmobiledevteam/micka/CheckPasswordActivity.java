@@ -96,6 +96,7 @@ public class CheckPasswordActivity extends AppCompatActivity {
                     mDatabase.getReference("user/"+mAuth.getUid()+"/firstname").setValue("");
                     mDatabase.getReference("user/"+mAuth.getUid()+"/secondname").setValue("");
                     mDatabase.getReference("user/"+mAuth.getUid()+"/email").setValue("");
+                    mDatabase.getReference("user/"+mAuth.getUid()+"/carnum").setValue("");
                     firstlogin = "yes";
                     mRef.setValue(_str_password);
                 }

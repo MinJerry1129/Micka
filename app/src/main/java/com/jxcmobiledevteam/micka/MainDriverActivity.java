@@ -109,7 +109,7 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
             public void onClick(View view) {
                 try
                 {
-                    String url = "https://waze.com/ul?to="+ myLocation.latitude + ","+myLocation.longitude  +"&from=" +targetLocation.latitude + "," +targetLocation.longitude +"&z=10";
+                    String url = "https://waze.com/ul?ul?dir_first=poi&navigate=yes&to=ll."+ myLocation.latitude + ","+myLocation.longitude  +"&from=ll." +targetLocation.latitude + "," +targetLocation.longitude;
                     Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( url ) );
                     startActivity( intent );
                 }
@@ -168,15 +168,18 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 joinStatus = dataSnapshot.getValue(String.class);
-                Log.d("joinStatus11111:::", joinStatus);
-                Common.getInstance().setJon_status(joinStatus);
-                if(joinStatus.equals("on")){
-                    _setJoin.setBackgroundResource(R.drawable.back_pink_button);
-                    _setJoin.setText("OffLine");
-                }else {
-                    _setJoin.setBackgroundResource(R.drawable.back_blue_button);
-                    _setJoin.setText("OnLine");
+                if(joinStatus != null){
+                    Log.d("joinStatus11111:::", joinStatus);
+                    Common.getInstance().setJon_status(joinStatus);
+                    if(joinStatus.equals("on")){
+                        _setJoin.setBackgroundResource(R.drawable.back_pink_button);
+                        _setJoin.setText("OffLine");
+                    }else {
+                        _setJoin.setBackgroundResource(R.drawable.back_blue_button);
+                        _setJoin.setText("OnLine");
+                    }
                 }
+
             }
 
             @Override
@@ -341,6 +344,7 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
                 if (ride_uuid.equals(dataSnapshot.getKey())){
                     _layoutConfirm.setVisibility(View.GONE);
                     _setJoin.setVisibility(View.VISIBLE);
+//                    refresh();
                 }
                 if(remove_status.equals("yes")){
                     Toast.makeText(MainDriverActivity.this, "Client Cancel the Ride", Toast.LENGTH_LONG).show();
@@ -365,6 +369,15 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
                 bookingRide();
             }
         });
+    }
+
+    public void refresh() {
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
     }
     private void bookingRide(){
         if (bookingStatus.equals("waiting")){

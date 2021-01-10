@@ -100,6 +100,9 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
     private double driverLat;
     private double driverLong;
 
+    String firstname = "";
+    String secondName = "";
+
     //payment
     private static final String BACKEND_URL = "https://www.micka-vtc.fr/stripe/";
     private OkHttpClient httpClient = new OkHttpClient();
@@ -171,12 +174,19 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
         _endAddress.setText(endAddress);
 
 
+
         mRef = mDatabase.getReference("user/"+driverUid);
         mRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.getKey().equals("name")){
-                    _driverName.setText(dataSnapshot.getValue().toString());
+
+                if (dataSnapshot.getKey().equals("firstname")){
+                    firstname = dataSnapshot.getValue().toString();
+                    _driverName.setText(firstname + secondName);
+                }
+                if (dataSnapshot.getKey().equals("secondname")){
+                    secondName = dataSnapshot.getValue().toString();
+                    _driverName.setText(firstname + secondName);
                 }
                 if (dataSnapshot.getKey().equals("latitude")){
                     driverLat = dataSnapshot.getValue(double.class);
@@ -192,7 +202,7 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
                 if (dataSnapshot.getKey().equals("phonetoken")){
                     phoneToken = dataSnapshot.getValue().toString();
                 }
-                if (dataSnapshot.getKey().equals("carnumber")){
+                if (dataSnapshot.getKey().equals("carnum")){
                     _carNumber.setText(dataSnapshot.getValue().toString());
                 }
             }
@@ -237,9 +247,11 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
                     if (bookingStatus.equals("waiting")){
                         _btnBook.setText("Waiting");
                         _btnBook.setEnabled(false);
+                        _btnCancel.setEnabled(true);
                     }else if (bookingStatus.equals("accept")){
                         _btnBook.setText("accepted");
                         _btnBook.setEnabled(false);
+                        _btnCancel.setEnabled(true);
                         Toast.makeText(UserRideActivity.this, "Driver accept your booking", Toast.LENGTH_LONG).show();
                     }else if (bookingStatus.equals("pickup")){
                         userLocation = Common.getInstance().getEnd_location();
@@ -250,16 +262,19 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
                         userLocation = Common.getInstance().getEnd_location();
                         _btnBook.setText("Paid");
                         _btnBook.setEnabled(false);
+                        _btnCancel.setEnabled(false);
                         mapFragment.getMapAsync(UserRideActivity.this);
                     }else if (bookingStatus.equals("paid")){
                         userLocation = Common.getInstance().getEnd_location();
                         _btnBook.setEnabled(true);
                         _btnBook.setText("Complete");
+                        _btnCancel.setEnabled(false);
                         mapFragment.getMapAsync(UserRideActivity.this);
                     }else if (bookingStatus.equals("complete")){
                         userLocation = Common.getInstance().getEnd_location();
                         _btnBook.setEnabled(true);
                         _btnBook.setText("Complete");
+                        _btnCancel.setEnabled(false);
                         mapFragment.getMapAsync(UserRideActivity.this);
                     }
                 }
@@ -375,6 +390,10 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
         });
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
 
     private void displayAlert(@NonNull String title,
                               @Nullable String message) {

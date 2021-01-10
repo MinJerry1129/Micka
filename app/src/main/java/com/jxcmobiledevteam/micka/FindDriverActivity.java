@@ -2,6 +2,7 @@ package com.jxcmobiledevteam.micka;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -230,7 +231,7 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
         Request request = new Request.Builder()
                 .url("https://fcm.googleapis.com/fcm/send")
                 .post(body)
-                .addHeader("Authorization", "key=AAAADo3gnEI: APA91bF5Mgx1w0i2bmi_rP7U9v2ZF1ZVvvW4vjbQtjGdN1SjwVxF06yubBs5M1gNrkkj98XvUdCdxgwxrqM8EL5bTHUCoFd0uhd7fxlfxwxrqM8EL5bTGuCoFd0uhd7fxlfwxwxrqM8EL5bTHuCoFx20uoh")
+                .addHeader("Authorization", "key=AAAADo3gnEI:APA91bF5Mgx1w0i2bmi_rP7U9v2ZF1ZVvvW4vjbQtjGdN1SjwVxF06yubBs5M1gNrkkj98XvUdCdxgwxrqM8EL5tGMX20uhbUo1wohLTuCFeu942AEjFby7J1LTdsdrdHlx_Io3fv0aA")
                 .addHeader("Content-Type", "application/json")
                 .build();
         httpClient.newCall(request).enqueue(new Callback() {
@@ -248,8 +249,12 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
 
     @Override
     public void onBackPressed() {
-        mDatabase.getReference("ride/"+uniqueId).removeValue();
-        finish();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("Cancel the request")
+                .setMessage("You should cancel the request.");
+
+        builder.setPositiveButton("Ok", null);
+        builder.create().show();
     }
 
     @Override

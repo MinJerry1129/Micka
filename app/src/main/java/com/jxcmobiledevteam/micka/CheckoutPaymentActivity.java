@@ -101,7 +101,6 @@ public class CheckoutPaymentActivity extends AppCompatActivity {
                     Toast.makeText(CheckoutPaymentActivity.this,"Input Correct Card info", Toast.LENGTH_LONG).show();
                 }
 
-
 //                if (params != null) {
 //                    Log.d("Card info:", String.valueOf(params));
 //                    ConfirmPaymentIntentParams confirmParams = ConfirmPaymentIntentParams.createWithPaymentMethodCreateParams(params, paymentIntentClientSecret);

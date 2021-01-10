@@ -31,10 +31,8 @@
             android:layout_marginRight="10dp"
             android:textColor="#000"
             android:drawableStart="@drawable/ic_outline_person_24"
-            android:drawableEnd="@drawable/ic_outline_lock_24"
             android:textSize="12dp"
-            android:hint="Firstname"
-            android:focusableInTouchMode="false"/>
+            android:hint="Firstname"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -54,10 +52,8 @@
             android:layout_marginRight="10dp"
             android:textColor="#000"
             android:drawableStart="@drawable/ic_outline_person_24"
-            android:drawableEnd="@drawable/ic_outline_lock_24"
             android:textSize="12dp"
-            android:hint="Second name"
-            android:focusableInTouchMode="false"/>
+            android:hint="Second name"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -99,10 +95,8 @@
             android:layout_marginRight="10dp"
             android:textColor="#000"
             android:drawableStart="@drawable/ic_outline_email_24"
-            android:drawableEnd="@drawable/ic_outline_lock_24"
             android:textSize="12dp"
-            android:hint="email"
-            android:focusableInTouchMode="false"/>
+            android:hint="email"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton

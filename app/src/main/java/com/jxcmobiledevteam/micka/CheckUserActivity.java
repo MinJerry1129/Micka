@@ -13,6 +13,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 
 import com.google.android.libraries.places.api.Places;
@@ -71,18 +72,38 @@ public class CheckUserActivity extends AppCompatActivity implements LocationList
                     }
                     if(user_status.equals("on")){
                         if(user_type.equals("driver")){
-                            Intent intent = new Intent(getBaseContext(), MainDriverActivity.class);
-                            startActivity(intent);
-                            finish();
+                            Handler handler=new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent intent = new Intent(getBaseContext(), MainDriverActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            },3000);
+
                         }else{
-                            Intent intent = new Intent(getBaseContext(), FirstPageActivity.class);
-                            startActivity(intent);
-                            finish();
+                            Handler handler=new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent intent = new Intent(getBaseContext(), FirstPageActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            },3000);
+
                         }
                     }else{
-                        Intent intent = new Intent(CheckUserActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                        Handler handler=new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        },3000);
                     }
                 }
 
@@ -107,9 +128,15 @@ public class CheckUserActivity extends AppCompatActivity implements LocationList
                 }
             });
         }else{
-            Intent intent = new Intent(CheckUserActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            Handler handler=new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            },3000);
         }
     }
 
@@ -124,6 +151,7 @@ public class CheckUserActivity extends AppCompatActivity implements LocationList
 
     @Override
     public void onProviderEnabled(String s) {
+        Log.d("providerEnabled:", s);
     }
 
     @Override
