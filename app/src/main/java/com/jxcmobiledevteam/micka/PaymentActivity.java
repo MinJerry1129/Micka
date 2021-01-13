@@ -55,6 +55,7 @@ public class PaymentActivity extends AppCompatActivity implements OnMapReadyCall
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
+    private ValueEventListener valueEventListener;
     private SupportMapFragment mapFragment;
     private Geocoder geocoder;
     private List<Address> start_addresses;
@@ -169,11 +170,15 @@ public class PaymentActivity extends AppCompatActivity implements OnMapReadyCall
             Common.getInstance().setDriver_uid(result_taxi.getmTaxiUid());
             Common.getInstance().setPay_amount((double) price);
             if (pay_status == 1){
+                action();
                 Intent intent = new Intent(PaymentActivity.this, FindDriverActivity.class);
                 startActivity(intent);
+                finish();
             }else{
+                action();
                 Intent intent = new Intent(PaymentActivity.this, CheckoutPaymentActivity.class);
                 startActivity(intent);
+                finish();
             }
 
             Log.d("Taxi Result:", String.valueOf(result_taxi.getmTaxiUid()));
@@ -181,7 +186,7 @@ public class PaymentActivity extends AppCompatActivity implements OnMapReadyCall
     }
     private void getTaxiInfo(){
         mRef = mDatabase.getReference("user/");
-        mRef.orderByChild("type").equalTo("driver").addValueEventListener(new ValueEventListener() {
+        valueEventListener = mRef.orderByChild("type").equalTo("driver").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.d("datasa:", String.valueOf(dataSnapshot));
@@ -239,6 +244,16 @@ public class PaymentActivity extends AppCompatActivity implements OnMapReadyCall
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @Override
+    public void onBackPressed() {
+        action();
+        Intent intent = new Intent(PaymentActivity.this, SecondPageActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    private void action(){
+        mRef.removeEventListener(valueEventListener);
     }
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {

@@ -115,6 +115,7 @@ public class SecondPageActivity extends AppCompatActivity implements OnMapReadyC
         Common.getInstance().setEnd_location(my_location);
         Intent intent = new Intent(SecondPageActivity.this, PaymentActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
@@ -163,6 +164,12 @@ public class SecondPageActivity extends AppCompatActivity implements OnMapReadyC
                 googleMap.addMarker(markerOptions);
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(SecondPageActivity.this, FirstPageActivity.class);
+        startActivity(intent);
+        finish();
     }
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {

@@ -56,36 +56,11 @@ public class CheckoutPaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout_payment);
 
-//        pay_amount = Common.getInstance().getPay_amount();
-//        stripe = new Stripe(
-//                getApplicationContext(),
-//                Objects.requireNonNull("pk_test_51HzziMAAOlrKKdKYJNlU1BeTmyfGvsW5fi0rtA5wLJLvzEj0FdPK6hSyAxcqPqDynKFqLdXw5CcdHXHDJVgRihhR00318CxHuF")
-//        );
         confirmButton = (Button)findViewById(R.id.btn_confrim);
         cardInputWidget = (CardInputWidget) findViewById(R.id.cardInputWidget);
         startCheckout();
     }
     private void startCheckout() {
-        // Create a PaymentIntent by calling the server's endpoint.
-//        double amount = pay_amount*100;
-//        Map<String,Object> payMap = new HashMap<>();
-//        Map<String,Object> itemMap = new HashMap<>();
-//        List<Map<String,Object>> itemList = new ArrayList<>();
-//        payMap.put("currency","eur");
-//        itemMap.put("id","Micka Taxi");
-//        itemMap.put("amount",amount);
-//        itemList.add(itemMap);
-//        payMap.put("items",itemList);
-//        String json = new Gson().toJson(payMap);
-//        MediaType mediaType = MediaType.get("application/json; charset=utf-8");
-//        RequestBody body = RequestBody.create(json, mediaType);
-//        Request request = new Request.Builder()
-//                .url(BACKEND_URL + "create.php")
-//                .post(body)
-//                .build();
-//        httpClient.newCall(request)
-//                .enqueue(new PayCallback(this));
-
         // Hook up the pay button to the card widget and stripe instance
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,14 +76,15 @@ public class CheckoutPaymentActivity extends AppCompatActivity {
                     Toast.makeText(CheckoutPaymentActivity.this,"Input Correct Card info", Toast.LENGTH_LONG).show();
                 }
 
-//                if (params != null) {
-//                    Log.d("Card info:", String.valueOf(params));
-//                    ConfirmPaymentIntentParams confirmParams = ConfirmPaymentIntentParams.createWithPaymentMethodCreateParams(params, paymentIntentClientSecret);
-//                    Log.d("adfadfa:::", String.valueOf(confirmParams));
-//                    stripe.confirmPayment(CheckoutPaymentActivity.this, confirmParams);
-//                }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(CheckoutPaymentActivity.this, PaymentActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void displayAlert(@NonNull String title,

@@ -67,6 +67,7 @@ public class FirstPageActivity extends AppCompatActivity implements OnMapReadyCa
     FirebaseAuth mAuth;
     FirebaseDatabase mDatabase;
     DatabaseReference mRef;
+    ValueEventListener valueEventListener;
     Bitmap smallMarker;
     Location mMyLocation;
     Location mTaxiLocation;
@@ -143,8 +144,10 @@ public class FirstPageActivity extends AppCompatActivity implements OnMapReadyCa
 
     public void startConfirm(){
         Common.getInstance().setStart_location(my_location);
+        action();
         Intent intent = new Intent(FirstPageActivity.this, SecondPageActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
@@ -168,10 +171,10 @@ public class FirstPageActivity extends AppCompatActivity implements OnMapReadyCa
     }
     private void showTaxi(){
         mRef = mDatabase.getReference("user/");
-        mRef.orderByChild("type").equalTo("driver").addValueEventListener(new ValueEventListener() {
+        valueEventListener=mRef.orderByChild("type").equalTo("driver").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("datasa:", String.valueOf(dataSnapshot));
+                Log.d("datasa1:", String.valueOf(dataSnapshot));
                 mTaxis.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()){
                     String mUid= ds.getKey();
@@ -181,9 +184,9 @@ public class FirstPageActivity extends AppCompatActivity implements OnMapReadyCa
                         LatLng mLatLng = new LatLng(mLatitude, mLongitude);
                         Taxi _mTaxi = new Taxi(mLatLng,mUid);
                         mTaxis.add(_mTaxi);
-                        Log.d("datasaLa:", mUid);
+                        Log.d("datasaLa1:", mUid);
                     }
-                    Log.d("datasaLatitude:", mUid);
+                    Log.d("datasaLatitude1:", mUid);
                 }
                 mapFragment.getMapAsync(FirstPageActivity.this);
             }
@@ -267,6 +270,9 @@ public class FirstPageActivity extends AppCompatActivity implements OnMapReadyCa
                 }
             }
         });
+    }
+    private void action(){
+        mRef.removeEventListener(valueEventListener);
     }
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {

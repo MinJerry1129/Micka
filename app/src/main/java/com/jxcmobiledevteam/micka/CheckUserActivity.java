@@ -31,6 +31,7 @@ public class CheckUserActivity extends AppCompatActivity implements LocationList
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
     private LocationManager locationmanager;
+    private ChildEventListener childEventListener;
     String user_status = "";
     String user_type ="";
     String user_enable ="";
@@ -60,7 +61,8 @@ public class CheckUserActivity extends AppCompatActivity implements LocationList
         if(currentUser != null) {
             Log.d("user uid:", currentUser.getUid());
             mRef = mDatabase.getReference("user/"+mAuth.getUid());
-            mRef.addChildEventListener(new ChildEventListener() {
+
+            childEventListener = mRef.addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
@@ -82,6 +84,7 @@ public class CheckUserActivity extends AppCompatActivity implements LocationList
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
+                                        action();
                                         Intent intent = new Intent(getBaseContext(), MainDriverActivity.class);
                                         startActivity(intent);
                                         finish();
@@ -92,6 +95,7 @@ public class CheckUserActivity extends AppCompatActivity implements LocationList
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
+                                        action();
                                         Intent intent = new Intent(getBaseContext(), FirstPageActivity.class);
                                         startActivity(intent);
                                         finish();
@@ -105,6 +109,7 @@ public class CheckUserActivity extends AppCompatActivity implements LocationList
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
+                                    action();
                                     Intent intent = new Intent(getBaseContext(), FirstPageActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -117,6 +122,7 @@ public class CheckUserActivity extends AppCompatActivity implements LocationList
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                action();
                                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                                 startActivity(intent);
                                 finish();
@@ -156,6 +162,10 @@ public class CheckUserActivity extends AppCompatActivity implements LocationList
                 }
             },5000);
         }
+    }
+
+    private void action(){
+        mRef.removeEventListener(childEventListener);
     }
 
     @Override

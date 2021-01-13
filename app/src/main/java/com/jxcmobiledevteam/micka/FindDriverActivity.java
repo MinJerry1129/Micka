@@ -64,6 +64,11 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
     private DatabaseReference mRideCheckRef;
     private DatabaseReference mRideCheckRef1;
     private DatabaseReference mUserRef;
+    private ValueEventListener mValue_driverToken;
+    private ValueEventListener mValue_driverPhone;
+    private ValueEventListener mValue_driverCheck;
+    private ValueEventListener mValue_driverCheck1;
+    private ValueEventListener mValue_user;
 
     private TextView mStartLocation;
     private TextView mEndLocation;
