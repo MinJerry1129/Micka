@@ -181,8 +181,9 @@ public class FirstPageActivity extends AppCompatActivity implements OnMapReadyCa
                     if(ds.child("join").getValue(String.class).equals("on")){
                         Double mLatitude= ds.child("latitude").getValue(Double.class);
                         Double mLongitude= ds.child("longitude").getValue(Double.class);
+                        String mPhonenumber= ds.child("phonenumber").getValue(String.class);
                         LatLng mLatLng = new LatLng(mLatitude, mLongitude);
-                        Taxi _mTaxi = new Taxi(mLatLng,mUid);
+                        Taxi _mTaxi = new Taxi(mLatLng,mUid,mPhonenumber);
                         mTaxis.add(_mTaxi);
                         Log.d("datasaLa1:", mUid);
                     }

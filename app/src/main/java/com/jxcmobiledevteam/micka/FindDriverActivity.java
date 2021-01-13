@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +40,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +61,7 @@ import static java.util.Locale.getDefault;
 public class FindDriverActivity extends AppCompatActivity implements OnMapReadyCallback {
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
+    private DatabaseReference mRef;
     private DatabaseReference mdriverTokenRef;
     private DatabaseReference mdriverPhoneRef;
     private DatabaseReference mRideCheckRef;
@@ -69,6 +72,15 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
     private ValueEventListener mValue_driverCheck;
     private ValueEventListener mValue_driverCheck1;
     private ValueEventListener mValue_user;
+    private ValueEventListener mValue_ref;
+    private Location _taxi_location;
+    private Location _result_taxi_location;
+    private Location _start_location;
+    Taxi result_taxi;
+
+    private ArrayList<Taxi> mTaxis = new ArrayList<>();
+    private ArrayList<Taxi> mCheckTaxis = new ArrayList<>();
+    private ArrayList<Taxi> mCurrentTaxis = new ArrayList<>();
 
     private TextView mStartLocation;
     private TextView mEndLocation;
@@ -112,9 +124,8 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
         end_smallMarker = Bitmap.createScaledBitmap(b2, width, height, false);
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
         startView();
-
+        getTaxiInfo();
         mapFragment.getMapAsync(this);
 
     }
@@ -146,7 +157,6 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userPhone = dataSnapshot.getValue(String.class);
-                requestRide();
             }
 
             @Override
@@ -160,7 +170,6 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 drivertoken = dataSnapshot.getValue(String.class);
-                requestRide();
             }
 
             @Override
@@ -173,7 +182,6 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 driverPhone = dataSnapshot.getValue(String.class);
-                requestRide();
             }
 
             @Override
@@ -230,11 +238,78 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
             }
         });
     }
+    private void getTaxiInfo(){
+        mRef = mDatabase.getReference("user/");
+        mValue_ref = mRef.orderByChild("type").equalTo("driver").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("datasa:", String.valueOf(dataSnapshot));
+                mTaxis.clear();
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    String mUid= ds.getKey();
+                    if(ds.child("join").getValue(String.class).equals("on")){
+                        Double mLatitude= ds.child("latitude").getValue(Double.class);
+                        Double mLongitude= ds.child("longitude").getValue(Double.class);
+                        String mPhonenumber= ds.child("phonenumber").getValue(String.class);
+                        LatLng mLatLng = new LatLng(mLatitude, mLongitude);
+                        Taxi _mTaxi = new Taxi(mLatLng,mUid,mPhonenumber);
+                        mTaxis.add(_mTaxi);
+                        Log.d("datasaLa:", mUid);
+                    }
+                    Log.d("datasaLatitude:", mUid);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void SearchDriver(){
+        mCurrentTaxis.clear();
+        if(mTaxis.isEmpty()){
+            Toast.makeText(FindDriverActivity.this,"No nearest taxi.", Toast.LENGTH_LONG).show();
+        }else{
+            if(!mCheckTaxis.isEmpty()){
+                for(Taxi checkTaxi : mTaxis){
+                    int i = 0;
+                    for (Taxi mCheckTaxi : mCheckTaxis){
+                        if(checkTaxi.getmTaxiUid().equals(mCheckTaxi.getmTaxiUid())){
+                            i = 1;
+                        }
+                    }
+                    if(i == 0){
+                        mCurrentTaxis.add(checkTaxi);
+                    }
+                }
+            }
+            if (mCurrentTaxis.isEmpty()){
+                Toast.makeText(FindDriverActivity.this,"No nearest taxi.", Toast.LENGTH_LONG).show();
+                finish();
+            }else{
+                result_taxi = mCurrentTaxis.get(0);
+                for(Taxi oneTaxi : mCurrentTaxis){
+                    _taxi_location.setLatitude(result_taxi.getmTaxiLocation().latitude);
+                    _taxi_location.setLongitude(result_taxi.getmTaxiLocation().longitude);
+                    _result_taxi_location.setLatitude(oneTaxi.getmTaxiLocation().latitude);
+                    _result_taxi_location.setLongitude(oneTaxi.getmTaxiLocation().longitude);
+                    if(_start_location.distanceTo(_taxi_location) > _start_location.distanceTo(_result_taxi_location)){
+                        result_taxi = oneTaxi;
+                    }
+                }
+                mCheckTaxis.add(result_taxi);
+                requestRide();
+            }
+        }
+
+
+    }
 
     private void requestRide(){
         if(!userPhone.equals("no") && !driverPhone.equals("no") && !drivertoken.equals("no")){
             mDatabase.getReference("ride/"+uniqueId+"/id").setValue(uniqueId);
-            mDatabase.getReference("ride/"+uniqueId+"/driver").setValue(driverUid);
+            mDatabase.getReference("ride/"+uniqueId+"/driver").setValue(result_taxi.getmTaxiUid());
             mDatabase.getReference("ride/"+uniqueId+"/passenger").setValue(mAuth.getUid());
             mDatabase.getReference("ride/"+uniqueId+"/startlat").setValue(start_location.latitude);
             mDatabase.getReference("ride/"+uniqueId+"/startlong").setValue(start_location.longitude);
@@ -245,7 +320,7 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
             mDatabase.getReference("ride/"+uniqueId+"/paytype").setValue(pay_type);
             mDatabase.getReference("ride/"+uniqueId+"/status").setValue("waiting");
             mDatabase.getReference("ride/"+uniqueId+"/passengernumber").setValue(userPhone);
-            mDatabase.getReference("ride/"+uniqueId+"/drivernumber").setValue(driverPhone);
+            mDatabase.getReference("ride/"+uniqueId+"/drivernumber").setValue(result_taxi.getmTaxiPhone());
             Common.getInstance().setRide_uuid(uniqueId);
             sendNotification("Passenger Request a ride.");
             mCancel.setEnabled(true);
@@ -291,6 +366,9 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
 
         builder.setPositiveButton("Ok", null);
         builder.create().show();
+    }
+    private void action(){
+        mRef.removeEventListener(mValue_ref);
     }
 
     @Override

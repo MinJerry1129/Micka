@@ -155,7 +155,7 @@ public class PaymentActivity extends AppCompatActivity implements OnMapReadyCall
     }
     private void SearchDriver(){
         if(mTaxis.isEmpty()){
-            Toast.makeText(PaymentActivity.this,"No nearest taix.", Toast.LENGTH_LONG).show();
+            Toast.makeText(PaymentActivity.this,"No nearest taxi.", Toast.LENGTH_LONG).show();
         }else{
             Taxi result_taxi = mTaxis.get(0);
             for(Taxi oneTaxi : mTaxis){
@@ -196,8 +196,9 @@ public class PaymentActivity extends AppCompatActivity implements OnMapReadyCall
                     if(ds.child("join").getValue(String.class).equals("on")){
                         Double mLatitude= ds.child("latitude").getValue(Double.class);
                         Double mLongitude= ds.child("longitude").getValue(Double.class);
+                        String mPhonenumber= ds.child("phonenumber").getValue(String.class);
                         LatLng mLatLng = new LatLng(mLatitude, mLongitude);
-                        Taxi _mTaxi = new Taxi(mLatLng,mUid);
+                        Taxi _mTaxi = new Taxi(mLatLng,mUid,mPhonenumber);
                         mTaxis.add(_mTaxi);
                         Log.d("datasaLa:", mUid);
                     }

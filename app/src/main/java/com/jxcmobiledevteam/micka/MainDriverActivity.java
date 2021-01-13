@@ -212,6 +212,7 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
                         price = dataSnapshot.child("price").getValue(int.class);
                         _price.setText(String.valueOf(price) + "€");
                         if (bookingStatus.equals("waiting")){
+                            mDatabase.getReference("user/"+mAuth.getUid()+"/join").setValue("off");
                             _confirm.setText("Accept");
                             _confirm.setEnabled(true);
                             _price.setTextColor(Color.parseColor("#ff2773"));
@@ -219,6 +220,7 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
                             _phoneWaze.setVisibility(View.GONE);
                             _confirm.setBackgroundResource(R.drawable.back_pink_button);
                         }else if (bookingStatus.equals("accept")){
+                            mDatabase.getReference("user/"+mAuth.getUid()+"/join").setValue("off");
                             _setJoin.setVisibility(View.INVISIBLE);
                             _confirm.setText("Pickup");
                             _confirm.setEnabled(true);
@@ -227,6 +229,7 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
                             _phoneWaze.setVisibility(View.VISIBLE);
                             _confirm.setBackgroundResource(R.drawable.back_blue_button);
                         }else if (bookingStatus.equals("pickup")){
+                            mDatabase.getReference("user/"+mAuth.getUid()+"/join").setValue("off");
                             _setJoin.setVisibility(View.INVISIBLE);
                             _confirm.setText("Paid");
                             _confirm.setEnabled(false);
@@ -237,6 +240,7 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
                             _phoneWaze.setVisibility(View.VISIBLE);
                             _confirm.setBackgroundResource(R.drawable.back_blue_button);
                         }else if (bookingStatus.equals("pay")){
+                            mDatabase.getReference("user/"+mAuth.getUid()+"/join").setValue("off");
                             _setJoin.setVisibility(View.INVISIBLE);
                             _confirm.setText("Paid");
                             _confirm.setEnabled(true);
@@ -247,6 +251,7 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
                             _phoneWaze.setVisibility(View.VISIBLE);
                             _confirm.setBackgroundResource(R.drawable.back_blue_button);
                         }else if (bookingStatus.equals("paid")){
+                            mDatabase.getReference("user/"+mAuth.getUid()+"/join").setValue("on");
                             _setJoin.setVisibility(View.VISIBLE);
                             _confirm.setEnabled(true);
                             _confirm.setText("Complete");
@@ -283,6 +288,7 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
                     phoneNumber = dataSnapshot.child("passengernumber").getValue(String.class);
                     _startAddress.setText(start_address);
                     if (bookingStatus.equals("waiting")){
+                        mDatabase.getReference("user/"+mAuth.getUid()+"/join").setValue("off");
                         _confirm.setText("Accept");
                         _confirm.setEnabled(true);
                         _price.setTextColor(Color.parseColor("#ff2773"));
@@ -290,6 +296,7 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
                         _phoneWaze.setVisibility(View.GONE);
                         _confirm.setBackgroundResource(R.drawable.back_pink_button);
                     }else if (bookingStatus.equals("accept")){
+                        mDatabase.getReference("user/"+mAuth.getUid()+"/join").setValue("off");
                         _setJoin.setVisibility(View.INVISIBLE);
                         _confirm.setText("Pickup");
                         _confirm.setEnabled(true);
@@ -298,6 +305,7 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
                         _phoneWaze.setVisibility(View.VISIBLE);
                         _confirm.setBackgroundResource(R.drawable.back_blue_button);
                     }else if (bookingStatus.equals("pickup")){
+                        mDatabase.getReference("user/"+mAuth.getUid()+"/join").setValue("off");
                         _setJoin.setVisibility(View.INVISIBLE);
                         _confirm.setText("Paid");
                         _confirm.setEnabled(false);
@@ -308,6 +316,7 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
                         _phoneWaze.setVisibility(View.VISIBLE);
                         _confirm.setBackgroundResource(R.drawable.back_blue_button);
                     }else if (bookingStatus.equals("pay")){
+                        mDatabase.getReference("user/"+mAuth.getUid()+"/join").setValue("off");
                         _setJoin.setVisibility(View.INVISIBLE);
                         _confirm.setText("Complete");
                         _confirm.setEnabled(true);
@@ -318,6 +327,7 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
                         _phoneWaze.setVisibility(View.VISIBLE);
                         _confirm.setBackgroundResource(R.drawable.back_blue_button);
                     }else if (bookingStatus.equals("paid")){
+                        mDatabase.getReference("user/"+mAuth.getUid()+"/join").setValue("on");
                         _setJoin.setVisibility(View.VISIBLE);
                         _confirm.setEnabled(true);
                         _confirm.setText("Complete");
@@ -329,6 +339,7 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
                         _confirm.setBackgroundResource(R.drawable.back_blue_button);
 //                        _layoutConfirm.setVisibility(View.GONE);
                     }else if (bookingStatus.equals("complete")){
+                        mDatabase.getReference("user/"+mAuth.getUid()+"/join").setValue("on");
                         _setJoin.setVisibility(View.VISIBLE);
                         _layoutConfirm.setVisibility(View.GONE);
                     }
@@ -350,6 +361,7 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
                     Toast.makeText(MainDriverActivity.this, "Client Cancel the Ride", Toast.LENGTH_LONG).show();
                 }
                 remove_status = "yes";
+                mDatabase.getReference("user/"+mAuth.getUid()+"/join").setValue("on");
                 Log.d("datasnapshot value:", "adfadsf");
             }
 
