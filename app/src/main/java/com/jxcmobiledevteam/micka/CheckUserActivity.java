@@ -33,13 +33,14 @@ public class CheckUserActivity extends AppCompatActivity implements LocationList
     private LocationManager locationmanager;
     String user_status = "";
     String user_type ="";
+    String user_enable ="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_user);
         if(!Places.isInitialized()){
 //            Places.initialize(getBaseContext(),"AIzaSyDx0lfU-akX0HiFDtEUUIJ99rugOB95Ip4");
-            Places.initialize(getBaseContext(),"AIzaSyC_EK-TNer1kUQHTPJqmxfYc-UtmsgUBi0");
+            Places.initialize(getBaseContext(),"AIzaSyB8RD2Pu5w7bv-UrhWA5dN1Brzdo-yf1SI");
         }
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
@@ -70,17 +71,34 @@ public class CheckUserActivity extends AppCompatActivity implements LocationList
                     if(dataSnapshot.getKey().equals("type")) {
                         user_type = (String) dataSnapshot.getValue();
                     }
+                    if(dataSnapshot.getKey().equals("enable")) {
+                        user_enable = (String) dataSnapshot.getValue();
+                    }
+
                     if(user_status.equals("on")){
                         if(user_type.equals("driver")){
-                            Handler handler=new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Intent intent = new Intent(getBaseContext(), MainDriverActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            },3000);
+                            if(user_enable.equals("yes")){
+                                Handler handler=new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(getBaseContext(), MainDriverActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                },5000);
+                            }else{
+                                Handler handler=new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(getBaseContext(), FirstPageActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                },5000);
+                            }
+
 
                         }else{
                             Handler handler=new Handler();
@@ -91,7 +109,7 @@ public class CheckUserActivity extends AppCompatActivity implements LocationList
                                     startActivity(intent);
                                     finish();
                                 }
-                            },3000);
+                            },5000);
 
                         }
                     }else{
@@ -103,7 +121,7 @@ public class CheckUserActivity extends AppCompatActivity implements LocationList
                                 startActivity(intent);
                                 finish();
                             }
-                        },3000);
+                        },5000);
                     }
                 }
 
@@ -136,13 +154,13 @@ public class CheckUserActivity extends AppCompatActivity implements LocationList
                     startActivity(intent);
                     finish();
                 }
-            },3000);
+            },5000);
         }
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.d("Location:", String.valueOf( location.getLatitude()));
+        Log.d("Location:::", String.valueOf( location.getLatitude()));
     }
 
     @Override

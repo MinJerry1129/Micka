@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -61,6 +62,7 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
     private DatabaseReference mdriverTokenRef;
     private DatabaseReference mdriverPhoneRef;
     private DatabaseReference mRideCheckRef;
+    private DatabaseReference mRideCheckRef1;
     private DatabaseReference mUserRef;
 
     private TextView mStartLocation;
@@ -171,6 +173,35 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        mRideCheckRef1 = mDatabase.getReference("ride/");
+        mRideCheckRef1.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getKey().equals(uniqueId)){
+                    Toast.makeText(FindDriverActivity.this, "Driver Cancel the request!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
