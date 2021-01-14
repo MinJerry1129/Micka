@@ -116,7 +116,7 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
                     android:textColor="@color/colorBlack"
-                    android:background="@drawable/back_gray_button"
+                    android:background="@drawable/back_blue_button"
                     android:enabled="false"
                     android:layout_marginTop="5dp"
                     android:text="Cancel"/>

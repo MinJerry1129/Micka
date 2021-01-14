@@ -112,8 +112,13 @@ public class ConfirmActivity extends AppCompatActivity{
 
     private void verifyCode(String code){
         progressDialog.show();
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
-        signInWithCredential(credential);
+        if (verificationId == null){
+            progressDialog.dismiss();
+            Toast.makeText(ConfirmActivity.this, "SMS will come!",Toast.LENGTH_LONG).show();
+        }else{
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+            signInWithCredential(credential);
+        }
     }
 
     private void signInWithCredential(PhoneAuthCredential credential) {

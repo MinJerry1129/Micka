@@ -113,6 +113,7 @@ public class SecondPageActivity extends AppCompatActivity implements OnMapReadyC
 
     public void endConfirm(){
         Common.getInstance().setEnd_location(my_location);
+        Log.d("end123123_location:", String.valueOf(my_location));
         Intent intent = new Intent(SecondPageActivity.this, PaymentActivity.class);
         startActivity(intent);
         finish();
@@ -144,6 +145,7 @@ public class SecondPageActivity extends AppCompatActivity implements OnMapReadyC
                 try {
                     addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
                     my_location = latLng;
+
                     String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
                     String city = addresses.get(0).getLocality();
                     String state = addresses.get(0).getAdminArea();

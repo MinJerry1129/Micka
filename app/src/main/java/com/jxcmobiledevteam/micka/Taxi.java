@@ -6,11 +6,14 @@ public class Taxi {
     private LatLng mTaxiLocation;
     private String mTaxiUid;
     private String mTaxiPhone;
+    private String mTaxiToken;
 
-    public Taxi(LatLng taxiLocation, String taxiUid, String taxiPhone){
+
+    public Taxi(LatLng taxiLocation, String taxiUid, String taxiPhone, String taxiToken){
         mTaxiLocation=taxiLocation;
         mTaxiUid = taxiUid;
         mTaxiPhone = taxiPhone;
+        mTaxiToken = taxiToken;
     }
 
     public LatLng getmTaxiLocation() {
@@ -20,4 +23,5 @@ public class Taxi {
         return mTaxiUid;
     }
     public String getmTaxiPhone() {return mTaxiPhone;}
+    public String getmTaxiToken() {return mTaxiToken;}
 }

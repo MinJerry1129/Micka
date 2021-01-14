@@ -144,6 +144,7 @@ public class FirstPageActivity extends AppCompatActivity implements OnMapReadyCa
 
     public void startConfirm(){
         Common.getInstance().setStart_location(my_location);
+        Log.d("start_location1231231:", String.valueOf(my_location));
         action();
         Intent intent = new Intent(FirstPageActivity.this, SecondPageActivity.class);
         startActivity(intent);
@@ -182,8 +183,9 @@ public class FirstPageActivity extends AppCompatActivity implements OnMapReadyCa
                         Double mLatitude= ds.child("latitude").getValue(Double.class);
                         Double mLongitude= ds.child("longitude").getValue(Double.class);
                         String mPhonenumber= ds.child("phonenumber").getValue(String.class);
+                        String mPhoneToken= ds.child("phonetoken").getValue(String.class);
                         LatLng mLatLng = new LatLng(mLatitude, mLongitude);
-                        Taxi _mTaxi = new Taxi(mLatLng,mUid,mPhonenumber);
+                        Taxi _mTaxi = new Taxi(mLatLng,mUid,mPhonenumber,mPhoneToken);
                         mTaxis.add(_mTaxi);
                         Log.d("datasaLa1:", mUid);
                     }
@@ -205,8 +207,9 @@ public class FirstPageActivity extends AppCompatActivity implements OnMapReadyCa
             Place place = Autocomplete.getPlaceFromIntent(data);
             _start_location.setText(place.getAddress());
             my_location = place.getLatLng();
+
             mapFragment.getMapAsync(this);
-            Log.d("place", "place:"+place.getAddress());
+            Log.d("start_location:::", String.valueOf(my_location));
         }
     }
 

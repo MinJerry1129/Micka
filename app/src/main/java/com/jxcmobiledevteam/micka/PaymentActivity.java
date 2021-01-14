@@ -99,6 +99,8 @@ public class PaymentActivity extends AppCompatActivity implements OnMapReadyCall
     private void setupView(){
         start_location = Common.getInstance().getStart_location();
         end_location = Common.getInstance().getEnd_location();
+        Log.d("start_location:", String.valueOf(start_location));
+        Log.d("end_location:", String.valueOf(end_location));
         _start_location = new Location("start");
         _end_location = new Location("end");
         _taxi_location = new Location("taxi");
@@ -197,8 +199,9 @@ public class PaymentActivity extends AppCompatActivity implements OnMapReadyCall
                         Double mLatitude= ds.child("latitude").getValue(Double.class);
                         Double mLongitude= ds.child("longitude").getValue(Double.class);
                         String mPhonenumber= ds.child("phonenumber").getValue(String.class);
+                        String mPhoneToken= ds.child("phonetoken").getValue(String.class);
                         LatLng mLatLng = new LatLng(mLatitude, mLongitude);
-                        Taxi _mTaxi = new Taxi(mLatLng,mUid,mPhonenumber);
+                        Taxi _mTaxi = new Taxi(mLatLng,mUid,mPhonenumber,mPhoneToken);
                         mTaxis.add(_mTaxi);
                         Log.d("datasaLa:", mUid);
                     }

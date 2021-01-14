@@ -64,12 +64,10 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
-    private DatabaseReference mdriverTokenRef;
     private DatabaseReference mdriverPhoneRef;
     private DatabaseReference mRideCheckRef;
     private DatabaseReference mRideCheckRef1;
     private DatabaseReference mUserRef;
-    private ValueEventListener mValue_driverToken;
     private ValueEventListener mValue_driverPhone;
     private ValueEventListener mValue_driverCheck;
     private ChildEventListener mValue_driverCheck1;
@@ -101,24 +99,30 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
     private int width = 100;
 
     private String userPhone = "no";
-    private String drivertoken = "no";
     private String driverPhone = "no";
     private String pay_type;
     private Double payPrice;
 
     private OkHttpClient httpClient = new OkHttpClient();
     String currentDateandTime;
-
+    private String time_status = "first";
     Timer timer = new Timer();
 
     Handler timerHandler = new Handler();
     Runnable timerRunnable = new Runnable() {
         @Override
         public void run() {
-            mDatabase.getReference("ride/"+uniqueId).removeValue();
-            SearchDriver();
+            if(time_status.equals("first")){
+                time_status = "second";
+                timerHandler.postDelayed(this, 10000);
+            }else{
+                mDatabase.getReference("ride/"+uniqueId).removeValue();
+                SearchDriver();
+                timerHandler.postDelayed(this, 60000);
+            }
             Log.d("timer working::", "timer worksing now");
-            timerHandler.postDelayed(this, 5000);
+
+
         }
     };
 
@@ -130,8 +134,12 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
         mDatabase = FirebaseDatabase.getInstance();
         mStartLocation = (TextView)findViewById(R.id.start_location);
         mEndLocation = (TextView)findViewById(R.id.end_location);
-        mCancel = (Button)findViewById(R.id.btn_cancel);
+        _start_location = new Location("start");
+        _taxi_location = new Location("taxi");
+        _result_taxi_location = new Location("resulttaxi");
 
+        mCancel = (Button)findViewById(R.id.btn_cancel);
+        mCancel.setEnabled(true);
         BitmapDrawable bitmapdraw1 = (BitmapDrawable)getResources().getDrawable(R.drawable.ic_start);
         Bitmap b1 = bitmapdraw1.getBitmap();
         start_smallMarker = Bitmap.createScaledBitmap(b1, width, height, false);
@@ -144,6 +152,7 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
         getTaxiInfo();
         mapFragment.getMapAsync(this);
         timerHandler.postDelayed(timerRunnable, 0);
+
     }
 
     private void startView(){
@@ -166,6 +175,10 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
                 mDatabase.getReference("ride/"+uniqueId).removeValue();
                 sendNotification("Passenger Cancel the request");
                 action();
+                Intent intent = new Intent(FindDriverActivity.this, PaymentActivity.class);
+                startActivity(intent);
+                finish();
+
             }
         });
 
@@ -182,18 +195,6 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
             }
         });
 
-        mdriverTokenRef = mDatabase.getReference("user/"+driverUid+"/phonetoken");
-        mValue_driverToken = mdriverTokenRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                drivertoken = dataSnapshot.getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
         mdriverPhoneRef = mDatabase.getReference("user/"+driverUid+"/phonenumber");
         mValue_driverPhone = mdriverPhoneRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -242,9 +243,10 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
                 String statusRide = dataSnapshot.getValue(String.class);
                 if(statusRide != null){
                     if (statusRide.equals("accept")){
+                        action();
                         Intent intent = new Intent(FindDriverActivity.this, UserRideActivity.class);
                         startActivity(intent);
-                        action();
+                        finish();
                     }
                 }
             }
@@ -268,8 +270,10 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
                         Double mLatitude= ds.child("latitude").getValue(Double.class);
                         Double mLongitude= ds.child("longitude").getValue(Double.class);
                         String mPhonenumber= ds.child("phonenumber").getValue(String.class);
+                        String mPhoneToken= ds.child("phonetoken").getValue(String.class);
+
                         LatLng mLatLng = new LatLng(mLatitude, mLongitude);
-                        Taxi _mTaxi = new Taxi(mLatLng,mUid,mPhonenumber);
+                        Taxi _mTaxi = new Taxi(mLatLng,mUid,mPhonenumber,mPhoneToken);
                         mTaxis.add(_mTaxi);
                         Log.d("datasaLa:", mUid);
                     }
@@ -284,9 +288,11 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
     }
 
     private void SearchDriver(){
+        mCancel.setBackgroundResource(R.drawable.back_blue_button);
         mCurrentTaxis.clear();
         if(mTaxis.isEmpty()){
             Toast.makeText(FindDriverActivity.this,"No nearest taxi.", Toast.LENGTH_LONG).show();
+            Log.d("no near:", "No nearest taxi");
         }else{
             if(!mCheckTaxis.isEmpty()){
                 for(Taxi checkTaxi : mTaxis){
@@ -300,14 +306,22 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
                         mCurrentTaxis.add(checkTaxi);
                     }
                 }
+            }else{
+                for(Taxi checkTaxi : mTaxis){
+                    mCurrentTaxis.add(checkTaxi);
+                }
             }
             if (mCurrentTaxis.isEmpty()){
-                action();
                 Toast.makeText(FindDriverActivity.this,"No nearest taxi.", Toast.LENGTH_LONG).show();
+                action();
+                Intent intent = new Intent(FindDriverActivity.this, PaymentActivity.class);
+                startActivity(intent);
+                finish();
 //                finish();
             }else{
                 result_taxi = mCurrentTaxis.get(0);
                 for(Taxi oneTaxi : mCurrentTaxis){
+                    Log.d("result taxi::", String.valueOf(result_taxi.getmTaxiLocation().latitude));
                     _taxi_location.setLatitude(result_taxi.getmTaxiLocation().latitude);
                     _taxi_location.setLongitude(result_taxi.getmTaxiLocation().longitude);
                     _result_taxi_location.setLatitude(oneTaxi.getmTaxiLocation().latitude);
@@ -320,12 +334,10 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
                 requestRide();
             }
         }
-
-
     }
 
     private void requestRide(){
-        if(!userPhone.equals("no") && !driverPhone.equals("no") && !drivertoken.equals("no")){
+        if(!userPhone.equals("no") && !driverPhone.equals("no")){
             mDatabase.getReference("ride/"+uniqueId+"/id").setValue(uniqueId);
             mDatabase.getReference("ride/"+uniqueId+"/driver").setValue(result_taxi.getmTaxiUid());
             mDatabase.getReference("ride/"+uniqueId+"/passenger").setValue(mAuth.getUid());
@@ -340,6 +352,7 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
             mDatabase.getReference("ride/"+uniqueId+"/passengernumber").setValue(userPhone);
             mDatabase.getReference("ride/"+uniqueId+"/drivernumber").setValue(result_taxi.getmTaxiPhone());
             Common.getInstance().setRide_uuid(uniqueId);
+            Common.getInstance().setDriver_uid(result_taxi.getmTaxiUid());
             sendNotification("Passenger Request a ride.");
             mCancel.setEnabled(true);
             mCancel.setTextColor(Color.parseColor("#ffffff"));
@@ -350,7 +363,7 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
     private void sendNotification(String Title){
         Map<String,Object> payMap = new HashMap<>();
         Map<String,Object> itemMap = new HashMap<>();
-        payMap.put("to",drivertoken);
+        payMap.put("to",result_taxi.getmTaxiToken());
         itemMap.put("body","From:" + Common.getInstance().getStart_address() + "\nto: " + Common.getInstance().getEnd_address() );
         itemMap.put("Title",Title);
         payMap.put("notification",itemMap);
@@ -387,14 +400,11 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
     }
     private void action(){
         timerHandler.removeCallbacks(timerRunnable);
-        mRef.removeEventListener(mValue_ref);
-        mRideCheckRef1.removeEventListener(mValue_driverCheck1);
-        mRideCheckRef.removeEventListener(mValue_driverCheck);
-        mdriverTokenRef.removeEventListener(mValue_driverToken);
-        mdriverPhoneRef.removeEventListener(mValue_driverPhone);
-        mUserRef.removeEventListener(mValue_user);
-
-        finish();
+//        mRef.removeEventListener(mValue_ref);
+//        mRideCheckRef1.removeEventListener(mValue_driverCheck1);
+//        mRideCheckRef.removeEventListener(mValue_driverCheck);
+//        mdriverPhoneRef.removeEventListener(mValue_driverPhone);
+//        mUserRef.removeEventListener(mValue_user);
     }
 
     @Override
