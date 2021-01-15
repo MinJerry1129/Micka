@@ -137,6 +137,7 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
         _start_location = new Location("start");
         _taxi_location = new Location("taxi");
         _result_taxi_location = new Location("resulttaxi");
+//        mCheckTaxis.clear();
 
         mCancel = (Button)findViewById(R.id.btn_cancel);
         mCancel.setEnabled(true);
@@ -178,7 +179,6 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
                 Intent intent = new Intent(FindDriverActivity.this, PaymentActivity.class);
                 startActivity(intent);
                 finish();
-
             }
         });
 
@@ -366,6 +366,7 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
         payMap.put("to",result_taxi.getmTaxiToken());
         itemMap.put("body","From:" + Common.getInstance().getStart_address() + "\nto: " + Common.getInstance().getEnd_address() );
         itemMap.put("Title",Title);
+//        itemMap.put("sound","default");
         payMap.put("notification",itemMap);
         String json = new Gson().toJson(payMap);
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");

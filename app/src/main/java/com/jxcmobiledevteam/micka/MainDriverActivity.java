@@ -109,7 +109,8 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
             public void onClick(View view) {
                 try
                 {
-                    String url = "https://waze.com/ul?ul?dir_first=poi&navigate=yes&to=ll."+ myLocation.latitude + ","+myLocation.longitude  +"&from=ll." +targetLocation.latitude + "," +targetLocation.longitude;
+//                    String url = "https://waze.com/ul?ul?dir_first=poi&navigate=yes&to=ll."+ myLocation.latitude + ","+myLocation.longitude  +"&from=ll." +targetLocation.latitude + "," +targetLocation.longitude;
+                    String url = "https://waze.com/ul?ll="+targetLocation.latitude+","+targetLocation.longitude+"&z=10";
                     Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( url ) );
                     startActivity( intent );
                 }
