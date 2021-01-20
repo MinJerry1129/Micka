@@ -68,6 +68,7 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
     private Button _cancel;
     private ImageView _phoneCall;
     private ImageView _phoneWaze;
+    private TextView _onlineStatus;
 
     private LatLng startLocation;
     private LatLng endLocation;
@@ -76,8 +77,6 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
     private String bookingStatus;
     private String ride_uuid;
     private String remove_status="yes";
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +93,7 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
         _cancel = (Button) findViewById(R.id.btn_cancel);
         _phoneCall = (ImageView) findViewById(R.id.btn_call);
         _phoneWaze = (ImageView) findViewById(R.id.btn_waze);
+        _onlineStatus = (TextView)findViewById(R.id.txt_onlinestatus);
         _phoneCall.setVisibility(View.GONE);
         _phoneWaze.setVisibility(View.GONE);
 
@@ -175,12 +175,13 @@ public class MainDriverActivity extends AppCompatActivity implements LocationLis
                     if(joinStatus.equals("on")){
                         _setJoin.setBackgroundResource(R.drawable.back_pink_button);
                         _setJoin.setText("OffLine");
+                        _onlineStatus.setText("You are online");
                     }else {
                         _setJoin.setBackgroundResource(R.drawable.back_blue_button);
                         _setJoin.setText("OnLine");
+                        _onlineStatus.setText("You are offline");
                     }
                 }
-
             }
 
             @Override

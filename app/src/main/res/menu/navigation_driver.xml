@@ -8,14 +8,14 @@
         android:id="@+id/navigation_history"
         android:icon="@drawable/ic_outline_calendar_today_24"
         android:title="Ride history" />
-    <item
-        android:id="@+id/navigation_payment"
-        android:icon="@drawable/ic_outline_credit_card_24"
-        android:title="Payment" />
-    <item
-        android:id="@+id/navigation_promos"
-        android:icon="@drawable/ic_outline_local_offer_24"
-        android:title="Promos" />
+<!--    <item-->
+<!--        android:id="@+id/navigation_payment"-->
+<!--        android:icon="@drawable/ic_outline_credit_card_24"-->
+<!--        android:title="Payment" />-->
+<!--    <item-->
+<!--        android:id="@+id/navigation_promos"-->
+<!--        android:icon="@drawable/ic_outline_local_offer_24"-->
+<!--        android:title="Promos" />-->
     <item
         android:id="@+id/navigation_setting"
         android:icon="@drawable/ic_outline_settings_24"

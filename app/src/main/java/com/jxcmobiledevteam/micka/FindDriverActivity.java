@@ -102,6 +102,7 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
     private String driverPhone = "no";
     private String pay_type;
     private Double payPrice;
+    private String cancel_status = "driver";
 
     private OkHttpClient httpClient = new OkHttpClient();
     String currentDateandTime;
@@ -121,8 +122,6 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
                 timerHandler.postDelayed(this, 60000);
             }
             Log.d("timer working::", "timer worksing now");
-
-
         }
     };
 
@@ -173,9 +172,11 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
         mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cancel_status = "user";
                 mDatabase.getReference("ride/"+uniqueId).removeValue();
                 sendNotification("Passenger Cancel the request");
                 action();
+
                 Intent intent = new Intent(FindDriverActivity.this, PaymentActivity.class);
                 startActivity(intent);
                 finish();
@@ -222,7 +223,14 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getKey().equals(uniqueId)){
-                    Toast.makeText(FindDriverActivity.this, "Driver Cancel the request!", Toast.LENGTH_LONG).show();
+                    if(cancel_status.equals("user")){
+
+                    }else{
+                        action();
+                        timerHandler.postDelayed(timerRunnable, 5);
+                        Toast.makeText(FindDriverActivity.this, "Driver Cancel the request!", Toast.LENGTH_LONG).show();
+
+                    }
                 }
             }
 

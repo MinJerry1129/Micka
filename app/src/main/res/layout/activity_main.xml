@@ -20,7 +20,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/fun"/>
+            android:src="@drawable/fun"
+            android:visibility="gone"/>
     </LinearLayout>
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_phone"
@@ -48,7 +49,8 @@
         android:drawableStart="@drawable/ic_facebook"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:text="@string/login_facebook"/>
+        android:text="@string/login_facebook"
+        android:visibility="gone"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
