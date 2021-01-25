@@ -203,6 +203,8 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
                     driverLong = dataSnapshot.getValue(double.class);
                     driverLocation = new LatLng(driverLat, driverLong);
                     mapFragment.getMapAsync(UserRideActivity.this);
+                    _driver_location.setLatitude(driverLocation.latitude);
+                    _driver_location.setLongitude(driverLocation.longitude);
                     calDistance();
                 }
                 if (dataSnapshot.getKey().equals("phonenumber")){
@@ -222,12 +224,16 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
                     driverLat = dataSnapshot.getValue(double.class);
                     driverLocation = new LatLng(driverLat, driverLong);
                     mapFragment.getMapAsync(UserRideActivity.this);
+                    _driver_location.setLatitude(driverLocation.latitude);
+                    _driver_location.setLongitude(driverLocation.longitude);
                     calDistance();
                 }
                 if (dataSnapshot.getKey().equals("longitude")){
                     driverLong = dataSnapshot.getValue(double.class);
                     driverLocation = new LatLng(driverLat, driverLong);
                     mapFragment.getMapAsync(UserRideActivity.this);
+                    _driver_location.setLatitude(driverLocation.latitude);
+                    _driver_location.setLongitude(driverLocation.longitude);
                     calDistance();
                 }
             }
