@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -99,6 +100,9 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
     private LatLng driverLocation;
     private double driverLat;
     private double driverLong;
+    private Location _start_location;
+    private Location _driver_location;
+    private String showCal = "yes";
 
     String firstname = "";
     String secondName = "";
@@ -115,6 +119,8 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_ride);
+        _start_location = new Location("start");
+        _driver_location = new Location("driver");
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
         pay_amount = Common.getInstance().getPay_amount();
@@ -129,6 +135,8 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
         endAddress = Common.getInstance().getEnd_address();
         uniqueId = Common.getInstance().getRide_uuid();
         userLocation = Common.getInstance().getStart_location();
+        _start_location.setLatitude(userLocation.latitude);
+        _start_location.setLongitude(userLocation.longitude);
 
         startView();
     }
@@ -195,6 +203,7 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
                     driverLong = dataSnapshot.getValue(double.class);
                     driverLocation = new LatLng(driverLat, driverLong);
                     mapFragment.getMapAsync(UserRideActivity.this);
+                    calDistance();
                 }
                 if (dataSnapshot.getKey().equals("phonenumber")){
                     phoneNumber = dataSnapshot.getValue().toString();
@@ -213,11 +222,13 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
                     driverLat = dataSnapshot.getValue(double.class);
                     driverLocation = new LatLng(driverLat, driverLong);
                     mapFragment.getMapAsync(UserRideActivity.this);
+                    calDistance();
                 }
                 if (dataSnapshot.getKey().equals("longitude")){
                     driverLong = dataSnapshot.getValue(double.class);
                     driverLocation = new LatLng(driverLat, driverLong);
                     mapFragment.getMapAsync(UserRideActivity.this);
+                    calDistance();
                 }
             }
 
@@ -245,32 +256,39 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
                     finish();
                 }else{
                     if (bookingStatus.equals("waiting")){
-                        _btnBook.setText("Waiting");
+//                        _btnBook.setText("Waiting");
                         _btnBook.setEnabled(false);
                         _btnCancel.setEnabled(true);
                     }else if (bookingStatus.equals("accept")){
-                        _btnBook.setText("accepted");
+
+//                        _btnBook.setText("accepted");
+
                         _btnBook.setEnabled(false);
                         _btnCancel.setEnabled(true);
                         Toast.makeText(UserRideActivity.this, "Driver accept your booking", Toast.LENGTH_LONG).show();
                     }else if (bookingStatus.equals("pickup")){
+                        showCal ="no";
+
                         userLocation = Common.getInstance().getEnd_location();
                         _btnBook.setText("P a y");
                         _btnBook.setEnabled(true);
                         mapFragment.getMapAsync(UserRideActivity.this);
                     }else if (bookingStatus.equals("pay")){
+                        showCal ="no";
                         userLocation = Common.getInstance().getEnd_location();
                         _btnBook.setText("Paid");
                         _btnBook.setEnabled(false);
                         _btnCancel.setEnabled(false);
                         mapFragment.getMapAsync(UserRideActivity.this);
                     }else if (bookingStatus.equals("paid")){
+                        showCal ="no";
                         userLocation = Common.getInstance().getEnd_location();
                         _btnBook.setEnabled(true);
                         _btnBook.setText("Complete");
                         _btnCancel.setEnabled(false);
                         mapFragment.getMapAsync(UserRideActivity.this);
                     }else if (bookingStatus.equals("complete")){
+                        showCal ="no";
                         userLocation = Common.getInstance().getEnd_location();
                         _btnBook.setEnabled(true);
                         _btnBook.setText("Complete");
@@ -392,6 +410,22 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onBackPressed() {
+
+    }
+    public void calDistance(){
+        Float distance_value;
+        distance_value = _start_location.distanceTo(_driver_location);
+        int sec;
+        sec = Math.round (distance_value*36/400);
+        int min = sec/60;
+        sec = sec-60*min;
+        if(showCal.equals("yes")){
+            if(min == 0){
+                _btnBook.setText(String.valueOf(sec) + "S later will arrive" );
+            }else{
+                _btnBook.setText(String.valueOf(min)+"min " +String.valueOf(sec) + "S later will arrive" );
+            }
+        }
 
     }
 

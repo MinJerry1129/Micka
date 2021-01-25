@@ -176,6 +176,11 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
                 mDatabase.getReference("ride/"+uniqueId).removeValue();
                 sendNotification("Passenger Cancel the request");
                 action();
+                mRef.removeEventListener(mValue_ref);
+                mRideCheckRef1.removeEventListener(mValue_driverCheck1);
+                mRideCheckRef.removeEventListener(mValue_driverCheck);
+                mdriverPhoneRef.removeEventListener(mValue_driverPhone);
+                mUserRef.removeEventListener(mValue_user);
 
                 Intent intent = new Intent(FindDriverActivity.this, PaymentActivity.class);
                 startActivity(intent);
@@ -252,6 +257,11 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
                 if(statusRide != null){
                     if (statusRide.equals("accept")){
                         action();
+                        mRef.removeEventListener(mValue_ref);
+                        mRideCheckRef1.removeEventListener(mValue_driverCheck1);
+                        mRideCheckRef.removeEventListener(mValue_driverCheck);
+                        mdriverPhoneRef.removeEventListener(mValue_driverPhone);
+                        mUserRef.removeEventListener(mValue_user);
                         Intent intent = new Intent(FindDriverActivity.this, UserRideActivity.class);
                         startActivity(intent);
                         finish();
@@ -299,7 +309,7 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
         mCancel.setBackgroundResource(R.drawable.back_blue_button);
         mCurrentTaxis.clear();
         if(mTaxis.isEmpty()){
-            Toast.makeText(FindDriverActivity.this,"No nearest taxi.", Toast.LENGTH_LONG).show();
+//            Toast.makeText(FindDriverActivity.this,"No nearest taxi.", Toast.LENGTH_LONG).show();
             Log.d("no near:", "No nearest taxi");
         }else{
             if(!mCheckTaxis.isEmpty()){
@@ -322,6 +332,11 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
             if (mCurrentTaxis.isEmpty()){
                 Toast.makeText(FindDriverActivity.this,"No nearest taxi.", Toast.LENGTH_LONG).show();
                 action();
+                mRef.removeEventListener(mValue_ref);
+                mRideCheckRef1.removeEventListener(mValue_driverCheck1);
+                mRideCheckRef.removeEventListener(mValue_driverCheck);
+                mdriverPhoneRef.removeEventListener(mValue_driverPhone);
+                mUserRef.removeEventListener(mValue_user);
                 Intent intent = new Intent(FindDriverActivity.this, PaymentActivity.class);
                 startActivity(intent);
                 finish();
@@ -409,11 +424,7 @@ public class FindDriverActivity extends AppCompatActivity implements OnMapReadyC
     }
     private void action(){
         timerHandler.removeCallbacks(timerRunnable);
-//        mRef.removeEventListener(mValue_ref);
-//        mRideCheckRef1.removeEventListener(mValue_driverCheck1);
-//        mRideCheckRef.removeEventListener(mValue_driverCheck);
-//        mdriverPhoneRef.removeEventListener(mValue_driverPhone);
-//        mUserRef.removeEventListener(mValue_user);
+
     }
 
     @Override
