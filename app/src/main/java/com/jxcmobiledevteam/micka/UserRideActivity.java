@@ -259,6 +259,8 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bookingStatus = dataSnapshot.child("status").getValue(String.class);
                 if (bookingStatus == null){
+                    Intent intent = new Intent(UserRideActivity.this, FirstPageActivity.class);
+                    startActivity(intent);
                     finish();
                 }else{
                     if (bookingStatus.equals("waiting")){
@@ -335,6 +337,8 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
             public void onClick(View view) {
                 mDatabase.getReference("ride/"+uniqueId).removeValue();
                 sendNotification("Passenger Cancel Requst.");
+                Intent intent = new Intent(UserRideActivity.this, FirstPageActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -357,6 +361,8 @@ public class UserRideActivity extends AppCompatActivity implements OnMapReadyCal
             }else if (bookingStatus.equals("paid")){
                 mDatabase.getReference("ride/"+uniqueId+"/status").setValue("complete");
             }else if (bookingStatus.equals("complete")){
+                Intent intent = new Intent(UserRideActivity.this, FirstPageActivity.class);
+                startActivity(intent);
                 finish();
             }
         }
